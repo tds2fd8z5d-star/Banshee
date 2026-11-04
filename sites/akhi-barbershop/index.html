@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akhi Barbershop — мужские стрижки и бритьё</title>
+<meta name="description" content="Akhi Barbershop: мужские стрижки, оформление бороды и королевское бритьё. Запись по телефону и в мессенджерах.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c9a45c'/%3E%3Cpath d='M32 12 L50 52 H41.5 L37.6 43 H26.4 L22.5 52 H14 Z M29.2 36 H34.8 L32 29.4 Z' fill='%23111'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0e0d; --bg2:#171513; --card:#1d1a17; --line:#2c2823;
+  --text:#f1ece4; --muted:#a59d92; --gold:#c9a45c; --gold2:#e2c48a;
+  --radius:14px; --max:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:400 16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:Oswald,Impact,sans-serif;font-weight:600;letter-spacing:.02em;text-transform:uppercase;line-height:1.1}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:15px;transition:.2s;border:1px solid transparent;cursor:pointer}
+.btn-gold{background:var(--gold);color:#14110d}
+.btn-gold:hover{background:var(--gold2)}
+.btn-line{border-color:var(--line);color:var(--text)}
+.btn-line:hover{border-color:var(--gold);color:var(--gold2)}
+.eyebrow{color:var(--gold);font:600 13px/1 Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px}
+section{padding:96px 0}
+.sec-head{max-width:640px;margin-bottom:48px}
+.sec-head h2{font-size:clamp(32px,5vw,48px)}
+.sec-head p{color:var(--muted);margin-top:14px}
+
+/* header */
+header{position:fixed;inset:0 0 auto;z-index:10;background:rgba(15,14,13,.82);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.05)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+.logo{display:flex;align-items:center;gap:10px;font:700 22px/1 Oswald,sans-serif;letter-spacing:.08em}
+.logo svg{width:34px;height:34px}
+.logo small{display:block;font:500 10px/1 Inter,sans-serif;letter-spacing:.3em;color:var(--muted);margin-top:4px}
+.nav-links{display:flex;gap:30px;font-size:14px;color:var(--muted)}
+.nav-links a:hover{color:var(--text)}
+.nav .btn{padding:10px 20px;font-size:14px}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(900px 500px at 85% 20%,rgba(201,164,92,.16),transparent 60%),
+    radial-gradient(700px 500px at 0% 100%,rgba(201,164,92,.08),transparent 60%),
+    var(--bg)}
+.hero::after{content:"";position:absolute;right:-6%;top:50%;transform:translateY(-50%);width:min(46vw,560px);aspect-ratio:1;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 12 L50 52 H41.5 L37.6 43 H26.4 L22.5 52 H14 Z M29.2 36 H34.8 L32 29.4 Z' fill='none' stroke='%23c9a45c' stroke-width='.35'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.5;pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:640px}
+.hero h1{font-size:clamp(52px,9vw,104px);font-weight:700}
+.hero h1 span{color:var(--gold)}
+.hero p.lead{font-size:clamp(17px,2.2vw,20px);color:var(--muted);margin:22px 0 34px;max-width:520px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:28px;margin-top:56px;color:var(--muted);font-size:14px}
+.hero-meta b{display:block;color:var(--text);font:600 18px/1.2 Oswald,sans-serif;letter-spacing:.04em;margin-bottom:4px}
+
+/* services */
+#services{background:var(--bg2)}
+.price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 56px}
+.price{display:flex;align-items:baseline;gap:12px;padding:22px 0;border-bottom:1px solid var(--line)}
+.price h3{font-size:20px}
+.price p{color:var(--muted);font-size:14px;margin-top:4px}
+.price .dots{flex:1;border-bottom:1px dashed var(--line);transform:translateY(-6px);min-width:20px}
+.price .cost{font:600 22px/1 Oswald,sans-serif;color:var(--gold2);white-space:nowrap}
+.price > div:first-child{max-width:70%}
+
+/* barbers */
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.barber{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.barber .ph{aspect-ratio:4/4.4;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#2a2520,#141210);font:700 72px/1 Oswald,sans-serif;color:rgba(201,164,92,.55);letter-spacing:.04em}
+.barber .info{padding:22px}
+.barber h3{font-size:22px}
+.barber .role{color:var(--gold);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin:6px 0 10px}
+.barber p{color:var(--muted);font-size:14px}
+
+/* about */
+#about{background:var(--bg2)}
+.about{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center}
+.about-text p{color:var(--muted);margin-bottom:16px}
+.about-text p strong{color:var(--text)}
+.features{display:grid;gap:14px}
+.feat{display:flex;gap:16px;padding:20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}
+.feat .ic{flex:none;width:44px;height:44px;border-radius:12px;background:rgba(201,164,92,.12);display:flex;align-items:center;justify-content:center}
+.feat .ic svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.feat h3{font-size:17px;margin-bottom:4px}
+.feat p{color:var(--muted);font-size:14px}
+
+/* booking / contacts */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:34px}
+.panel h3{font-size:24px;margin-bottom:8px}
+.panel > p{color:var(--muted);margin-bottom:24px}
+.book-btns{display:grid;gap:10px}
+.book-btns .btn{width:100%}
+.rows{display:grid;gap:18px}
+.row{display:flex;gap:14px}
+.row svg{flex:none;width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.row small{display:block;color:var(--muted);font-size:13px}
+.map{margin-top:24px;height:170px;border-radius:12px;border:1px solid var(--line);
+  background:
+    linear-gradient(rgba(201,164,92,.06) 1px,transparent 1px) 0 0/28px 28px,
+    linear-gradient(90deg,rgba(201,164,92,.06) 1px,transparent 1px) 0 0/28px 28px,#191714;
+  display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+@media (max-width:900px){
+  .nav-links{display:none}
+  .price-grid{grid-template-columns:1fr}
+  .team{grid-template-columns:1fr 1fr}
+  .about,.contact{grid-template-columns:1fr;gap:32px}
+  .hero::after{opacity:.18;right:-30%;width:90vw}
+}
+@media (max-width:560px){
+  section{padding:72px 0}
+  .wrap{padding:0 16px}
+  .team{grid-template-columns:1fr}
+  .barber .ph{aspect-ratio:16/8;font-size:56px}
+  .nav .btn{display:none}
+  .panel{padding:24px}
+  .price > div:first-child{max-width:62%}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo" aria-label="Akhi Barbershop">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#c9a45c"/><path d="M32 12 L50 52 H41.5 L37.6 43 H26.4 L22.5 52 H14 Z M29.2 36 H34.8 L32 29.4 Z" fill="#111"/></svg>
+      <span>AKHI<small>BARBERSHOP</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#services">Услуги</a>
+      <a href="#team">Мастера</a>
+      <a href="#about">О нас</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a href="#contacts" class="btn btn-gold">Записаться</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="eyebrow">Мужская парикмахерская</div>
+        <h1>Akhi<br><span>Barbershop</span></h1>
+        <p class="lead">«Akhi» значит «брат». Сюда приходят за чёткой стрижкой, аккуратной бородой и спокойной атмосферой, как у своих.</p>
+        <div class="hero-cta">
+          <a href="#contacts" class="btn btn-gold">Записаться</a>
+          <a href="#services" class="btn btn-line">Услуги и цены</a>
+        </div>
+        <div class="hero-meta">
+          <div><b>10:00 – 22:00</b>ежедневно</div>
+          <div><b>от 900 ₽</b>стрижка</div>
+          <div><b>без очереди</b>по записи</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Прайс</div>
+        <h2>Услуги и цены</h2>
+        <p>Каждая услуга включает консультацию, мытьё головы и укладку.</p>
+      </div>
+      <div class="price-grid">
+        <div class="price"><div><h3>Мужская стрижка</h3><p>Ножницы и машинка, любая форма</p></div><span class="dots"></span><span class="cost">1 500 ₽</span></div>
+        <div class="price"><div><h3>Стрижка + борода</h3><p>Комплекс: стрижка и оформление бороды</p></div><span class="dots"></span><span class="cost">2 300 ₽</span></div>
+        <div class="price"><div><h3>Стрижка машинкой</h3><p>Одна или две насадки</p></div><span class="dots"></span><span class="cost">900 ₽</span></div>
+        <div class="price"><div><h3>Оформление бороды</h3><p>Форма, контур, уход маслом</p></div><span class="dots"></span><span class="cost">1 000 ₽</span></div>
+        <div class="price"><div><h3>Фейд</h3><p>Плавный переход от кожи</p></div><span class="dots"></span><span class="cost">1 700 ₽</span></div>
+        <div class="price"><div><h3>Королевское бритьё</h3><p>Опасная бритва, горячее полотенце</p></div><span class="dots"></span><span class="cost">1 500 ₽</span></div>
+        <div class="price"><div><h3>Детская стрижка</h3><p>До 12 лет</p></div><span class="dots"></span><span class="cost">1 000 ₽</span></div>
+        <div class="price"><div><h3>Камуфляж седины</h3><p>Голова или борода</p></div><span class="dots"></span><span class="cost">1 200 ₽</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Команда</div>
+        <h2>Наши мастера</h2>
+        <p>Выберите своего барбера при записи или доверьтесь администратору.</p>
+      </div>
+      <div class="team">
+        <article class="barber"><div class="ph">А</div><div class="info"><h3>Али</h3><div class="role">Топ-барбер</div><p>Классические стрижки, фейды, сложные бороды.</p></div></article>
+        <article class="barber"><div class="ph">Т</div><div class="info"><h3>Тимур</h3><div class="role">Барбер</div><p>Современные стрижки и текстура.</p></div></article>
+        <article class="barber"><div class="ph">Р</div><div class="info"><h3>Руслан</h3><div class="role">Барбер</div><p>Королевское бритьё и уход за бородой.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div class="about-text">
+        <div class="eyebrow">О нас</div>
+        <h2 style="font-size:clamp(32px,5vw,48px);margin-bottom:22px">Место, где тебя<br>ждут как брата</h2>
+        <p><strong>Akhi</strong> — барбершоп для тех, кто ценит своё время и результат. Без спешки, без конвейера: мастер работает с одним клиентом и доводит образ до конца.</p>
+        <p>Перед стрижкой мастер обсудит с вами форму, а после покажет, как укладывать волосы дома.</p>
+      </div>
+      <div class="features">
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div><h3>Точно по времени</h3><p>Запись на конкретное время, без ожидания в очереди.</p></div></div>
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M12 3v3"/></svg></div><div><h3>Кофе и чай</h3><p>Угостим, пока вы ждёте или отдыхаете после стрижки.</p></div></div>
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3l6 9 6-9"/><circle cx="7" cy="18" r="3"/><circle cx="17" cy="18" r="3"/><path d="M12 12l-3.5 3.5M12 12l3.5 3.5"/></svg></div><div><h3>Профессиональная косметика</h3><p>Средства для укладки и ухода за бородой можно купить с собой.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacts">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Запись</div>
+        <h2>Запишитесь на стрижку</h2>
+        <p>Позвоните или напишите в мессенджер: подберём удобное время и мастера.</p>
+      </div>
+      <div class="contact">
+        <div class="panel">
+          <h3>Онлайн-запись</h3>
+          <p>Ответим в течение 10 минут в рабочее время.</p>
+          <div class="book-btns">
+            <a class="btn btn-gold" href="tel:+79000000000">Позвонить: +7 (900) 000-00-00</a>
+            <a class="btn btn-line" href="https://wa.me/79000000000" target="_blank" rel="noopener">Написать в WhatsApp</a>
+            <a class="btn btn-line" href="https://t.me/" target="_blank" rel="noopener">Написать в Telegram</a>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Как нас найти</h3>
+          <div class="rows" style="margin-top:20px">
+            <div class="row"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div>г. Город, ул. Примерная, 1<small>вход со двора</small></div></div>
+            <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div>Ежедневно 10:00 – 22:00<small>без выходных</small></div></div>
+            <div class="row"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><div>+7 (900) 000-00-00<small>звонки и мессенджеры</small></div></div>
+          </div>
+          <div class="map">Здесь будет карта</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© Akhi Barbershop</span>
+    <span>Мужские стрижки и бритьё</span>
+  </div>
+</footer>
+
+</body>
+</html>

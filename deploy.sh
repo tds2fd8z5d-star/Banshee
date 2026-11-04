@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # One-shot deploy of both sites to an Ubuntu/Debian VPS:
 #   oldd-school.duckdns.org       <- branch main  (original site)
-#   akhi-barbershop.duckdns.org  <- branch akhi  (Akhi copy)
+#   akhi-barbershop.duckdns.org  <- static landing sites/akhi-barbershop
 # Usage (as root):
 #   curl -fsSL https://raw.githubusercontent.com/tds2fd8z5d-star/Banshee/main/deploy.sh | bash
 set -euo pipefail
@@ -33,9 +33,9 @@ deploy() {
         -p "127.0.0.1:$port:5000" "$name-web"
 }
 
-docker rm -f site >/dev/null 2>&1 || true   # container from the previous script version
+docker rm -f akhi >/dev/null 2>&1 || true   # container from the previous script version
 deploy site main 5000
-deploy akhi akhi 5001
+LANDING=/opt/site/sites/akhi-barbershop
 
 echo "==> Configuring Caddy"
 CADDYFILE="
@@ -44,7 +44,9 @@ $MAIN_DOMAIN, http://$MAIN_DOMAIN {
 }
 
 $AKHI_DOMAIN, http://$AKHI_DOMAIN {
-    reverse_proxy 127.0.0.1:5001
+    root * $LANDING
+    file_server
+    encode gzip
 }
 "
 if systemctl list-unit-files 2>/dev/null | grep -q '^caddy\.service'; then
@@ -58,13 +60,13 @@ else
     docker rm -f caddy >/dev/null 2>&1 || true
     docker run -d --name caddy --restart unless-stopped --network host \
         -v /opt/caddy/Caddyfile:/etc/caddy/Caddyfile \
+        -v /opt/site/sites:/opt/site/sites:ro \
         -v caddy_data:/data caddy:2
 fi
 
 sleep 8
-for p in 5000 5001; do
-    echo "==> 127.0.0.1:$p answers HTTP $(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:$p || true) (200 = OK)"
-done
+echo "==> site:    HTTP $(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:5000 || true) (200 = OK)"
+echo "==> landing: HTTP $(curl -s -o /dev/null -w '%{http_code}' -H "Host: $AKHI_DOMAIN" http://127.0.0.1 || true) (200 or 308 = OK)"
 echo "==> Done:"
 echo "    https://$MAIN_DOMAIN"
 echo "    https://$AKHI_DOMAIN"
