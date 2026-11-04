@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # One-shot deploy of both sites to an Ubuntu/Debian VPS:
 #   oldd-school.duckdns.org       <- branch main  (original site)
-#   akhi.oldd-school.duckdns.org  <- branch akhi  (Akhi copy)
+#   akhi-barbershop.duckdns.org  <- branch akhi  (Akhi copy)
 # Usage (as root):
 #   curl -fsSL https://raw.githubusercontent.com/tds2fd8z5d-star/Banshee/main/deploy.sh | bash
 set -euo pipefail
 
 REPO="https://github.com/tds2fd8z5d-star/Banshee"
 MAIN_DOMAIN="${MAIN_DOMAIN:-oldd-school.duckdns.org}"
-AKHI_DOMAIN="${AKHI_DOMAIN:-akhi.oldd-school.duckdns.org}"
+AKHI_DOMAIN="${AKHI_DOMAIN:-akhi-barbershop.duckdns.org}"
 
 echo "==> Installing packages"
 export DEBIAN_FRONTEND=noninteractive
