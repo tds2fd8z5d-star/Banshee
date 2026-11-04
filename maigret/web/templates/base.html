@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maigret Web Interface</title>
+    <title>Akhi</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='akhi.svg') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -191,16 +192,12 @@
 </head>
 
 <body>
-    <div class="gh-ribbon">
-        <a href="https://github.com/soxoj/maigret" target="_blank" rel="noopener">Fork me on GitHub</a>
-    </div>
-
     <div class="header">
         <div class="container">
             <div class="header-content">
                 <div class="logo-container">
-                    <img src="{{ url_for('static', filename='maigret.png') }}" alt="Maigret Logo" class="logo">
-                    <h1 class="h4 mb-0">Maigret Web Interface</h1>
+                    <img src="{{ url_for('static', filename='akhi.svg') }}" alt="Akhi Logo" class="logo">
+                    <h1 class="h4 mb-0">Akhi</h1>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">New Search</a>
@@ -469,7 +466,7 @@
     <footer class="footer">
         <div class="container">
             <p class="mb-0">
-                Powered by <a href="https://github.com/soxoj/maigret" target="_blank">Maigret</a> |
+                &copy; Akhi | Powered by <a href="https://github.com/soxoj/maigret" target="_blank">Maigret</a> |
                 Licensed under <a href="https://github.com/soxoj/maigret/blob/main/LICENSE" target="_blank">MIT
                     License</a>
             </p>
