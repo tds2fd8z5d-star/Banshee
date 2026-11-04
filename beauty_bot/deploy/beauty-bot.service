@@ -1,0 +1,16 @@
+[Unit]
+Description=Telegram-бот записи к мастеру
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=beautybot
+WorkingDirectory=/opt/beauty-bot
+EnvironmentFile=/opt/beauty-bot/.env
+ExecStart=/opt/beauty-bot/.venv/bin/python -m bot
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

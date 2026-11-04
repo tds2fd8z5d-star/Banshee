@@ -1,0 +1,8 @@
+.env
+data/
+*.sqlite3*
+__pycache__/
+.venv/
+venv/
+.pytest_cache/
+!requirements-dev.txt

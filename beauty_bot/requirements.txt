@@ -1,0 +1,6 @@
+aiogram==3.31.0
+aiosqlite==0.22.1
+APScheduler==3.10.4
+PyYAML>=6.0,<7
+python-dotenv>=1.0,<2
+tzdata>=2024.1

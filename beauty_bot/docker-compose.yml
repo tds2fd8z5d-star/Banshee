@@ -1,0 +1,14 @@
+services:
+  bot:
+    build: .
+    container_name: beauty-bot
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_PATH: /app/data/bot.sqlite3
+    volumes:
+      - ./data:/app/data            # база данных сохраняется между перезапусками
+      - ./config.yaml:/app/config.yaml:ro
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
