@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
-# One-shot deploy of the web interface to a fresh Ubuntu/Debian VPS.
+# One-shot deploy of both sites to an Ubuntu/Debian VPS:
+#   oldd-school.duckdns.org       <- branch main  (original site)
+#   akhi.oldd-school.duckdns.org  <- branch akhi  (Akhi copy)
 # Usage (as root):
 #   curl -fsSL https://raw.githubusercontent.com/tds2fd8z5d-star/Banshee/main/deploy.sh | bash
 set -euo pipefail
 
-DOMAIN="${DOMAIN:-oldd-school.duckdns.org}"
 REPO="https://github.com/tds2fd8z5d-star/Banshee"
-DIR=/opt/site
+MAIN_DOMAIN="${MAIN_DOMAIN:-oldd-school.duckdns.org}"
+AKHI_DOMAIN="${AKHI_DOMAIN:-akhi.oldd-school.duckdns.org}"
 
 echo "==> Installing packages"
 export DEBIAN_FRONTEND=noninteractive
@@ -14,30 +16,55 @@ apt-get update -y
 apt-get install -y git curl
 command -v docker >/dev/null || curl -fsSL https://get.docker.com | sh
 
-echo "==> Fetching code"
-if [ -d "$DIR/.git" ]; then git -C "$DIR" pull --ff-only; else git clone "$REPO" "$DIR"; fi
+# deploy NAME BRANCH PORT
+deploy() {
+    local name=$1 branch=$2 port=$3 dir=/opt/$1
+    echo "==> [$name] fetching branch $branch"
+    if [ -d "$dir/.git" ]; then
+        git -C "$dir" fetch origin "$branch"
+        git -C "$dir" checkout -q -B "$branch" "origin/$branch"
+    else
+        git clone -b "$branch" "$REPO" "$dir"
+    fi
+    echo "==> [$name] building image (takes a few minutes)"
+    docker build --target web -t "$name-web" "$dir"
+    docker rm -f "$name" >/dev/null 2>&1 || true
+    docker run -d --name "$name" --restart unless-stopped \
+        -p "127.0.0.1:$port:5000" "$name-web"
+}
 
-echo "==> Building image (takes a few minutes)"
-docker build --target web -t site-web "$DIR"
+docker rm -f site >/dev/null 2>&1 || true   # container from the previous script version
+deploy site main 5000
+deploy akhi akhi 5001
 
-echo "==> Starting container"
-docker rm -f site >/dev/null 2>&1 || true
-
-if systemctl list-unit-files 2>/dev/null | grep -q '^caddy\.service'; then
-    # Caddy already serves ports 80/443: put the site behind it (automatic HTTPS).
-    docker run -d --name site --restart unless-stopped -p 127.0.0.1:5000:5000 site-web
-    [ -f /etc/caddy/Caddyfile ] && cp /etc/caddy/Caddyfile "/etc/caddy/Caddyfile.bak.$(date +%s)"
-    cat > /etc/caddy/Caddyfile <<EOF
-$DOMAIN, http://$DOMAIN {
+echo "==> Configuring Caddy"
+CADDYFILE="
+$MAIN_DOMAIN, http://$MAIN_DOMAIN {
     reverse_proxy 127.0.0.1:5000
 }
-EOF
+
+$AKHI_DOMAIN, http://$AKHI_DOMAIN {
+    reverse_proxy 127.0.0.1:5001
+}
+"
+if systemctl list-unit-files 2>/dev/null | grep -q '^caddy\.service'; then
+    [ -f /etc/caddy/Caddyfile ] && cp /etc/caddy/Caddyfile "/etc/caddy/Caddyfile.bak.$(date +%s)"
+    printf '%s\n' "$CADDYFILE" > /etc/caddy/Caddyfile
     systemctl reload caddy || systemctl restart caddy
 else
-    docker run -d --name site --restart unless-stopped -p 80:5000 site-web
+    # No system Caddy: run it in Docker on the host network.
+    mkdir -p /opt/caddy
+    printf '%s\n' "$CADDYFILE" > /opt/caddy/Caddyfile
+    docker rm -f caddy >/dev/null 2>&1 || true
+    docker run -d --name caddy --restart unless-stopped --network host \
+        -v /opt/caddy/Caddyfile:/etc/caddy/Caddyfile \
+        -v caddy_data:/data caddy:2
 fi
 
-sleep 5
-code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:5000 || true)
-[ "$code" = "000" ] && code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1 || true)
-echo "==> Done. Site answers locally with HTTP $code (200 = OK)"
+sleep 8
+for p in 5000 5001; do
+    echo "==> 127.0.0.1:$p answers HTTP $(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:$p || true) (200 = OK)"
+done
+echo "==> Done:"
+echo "    https://$MAIN_DOMAIN"
+echo "    https://$AKHI_DOMAIN"
